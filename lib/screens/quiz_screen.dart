@@ -30,7 +30,7 @@ class _QuizScreenState extends State<QuizScreen> {
   String _selectedAnswer = "";
   String _feedbackText = "";
   int _timeRemaining = 15;
-  late final Timer _timer;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -52,16 +52,19 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _startTimer() {
-    _timeRemaining = 15;
+    setState(() {
+      _timeRemaining = 15; // Set initial time to 15 seconds
+    });
+
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_timeRemaining > 0) {
+      if (_timeRemaining > 0) {
+        setState(() {
           _timeRemaining--;
-        } else {
-          timer.cancel();
-          _markQuestionIncorrect();
-        }
-      });
+        });
+      } else {
+        timer.cancel();
+        _markQuestionIncorrect();
+      }
     });
   }
 
