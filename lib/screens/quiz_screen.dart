@@ -42,7 +42,8 @@ class _QuizScreenState extends State<QuizScreen> {
     try {
       final questions = await ApiService.fetchQuestions();
       setState(() {
-        _questions = questions;
+        // Limit the questions to the number selected by the user
+        _questions = questions.take(widget.numberOfQuestions).toList();
         _loading = false;
         _startTimer();
       });
@@ -57,13 +58,12 @@ class _QuizScreenState extends State<QuizScreen> {
     });
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_timeRemaining > 0) {
+      if (_timeRemaining > 0 && !_answered) {
         setState(() {
           _timeRemaining--;
         });
       } else {
-        timer.cancel();
-        _markQuestionIncorrect();
+        timer.cancel(); // Stop the timer once the question is answered or time is up
       }
     });
   }
@@ -78,7 +78,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _submitAnswer(String selectedAnswer) {
-    _timer.cancel();
+    _timer.cancel(); // Cancel the timer when an answer is selected
     setState(() {
       _answered = true;
       _selectedAnswer = selectedAnswer;
