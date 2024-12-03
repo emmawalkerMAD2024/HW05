@@ -104,7 +104,6 @@ class _QuizScreenState extends State<QuizScreen> {
       Navigator.pushReplacementNamed(context, '/results', arguments: {
         'score': _score,
         'totalQuestions': _questions.length,
-        'questions': _questions,
       });
     }
   }

@@ -22,7 +22,7 @@ class _SetupScreenState extends State<SetupScreen> {
       MaterialPageRoute(
         builder: (context) => QuizScreen(
           numberOfQuestions: _numberOfQuestions,
-          categoryId: int.parse(_selectedCategory), // Parsing category as int
+          categoryId: int.parse(_selectedCategory),
           difficulty: _selectedDifficulty,
           questionType: _selectedType,
         ),
